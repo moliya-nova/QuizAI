@@ -11,10 +11,11 @@ function request(options) {
     header['Authorization'] = 'Bearer ' + token
   }
 
-  return wx.request({
+  const requestTask = wx.request({
     ...options,
     header
   })
+  return requestTask
 }
 
 module.exports = { request }

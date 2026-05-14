@@ -87,26 +87,37 @@
         <router-view />
       </el-main>
     </el-container>
+
+    <!-- 悬浮 AI 助手按钮 -->
+    <div class="ai-float-btn" @click="showChat = !showChat" :class="{ active: showChat }">
+      <el-icon :size="24"><ChatDotRound /></el-icon>
+    </div>
+
+    <!-- 悬浮聊天窗 -->
+    <ChatDialog v-model="showChat" />
   </el-container>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ChatDialog from '@/components/ChatDialog/index.vue'
 import {
-  User, Menu, Document, ArrowDown, DArrowLeft, DArrowRight,
-  HomeFilled, SwitchButton
+  User, Menu, Document, Cpu, ArrowDown, DArrowLeft, DArrowRight,
+  HomeFilled, SwitchButton, ChatDotRound
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
 const isCollapse = ref(false)
 const currentTime = ref('')
+const showChat = ref(false)
 
 const menuItems = [
   { path: '/user', label: '用户管理', icon: User },
   { path: '/category', label: '分类管理', icon: Menu },
   { path: '/question', label: '题目管理', icon: Document },
+  { path: '/agent', label: 'Agent管理', icon: Cpu },
 ]
 
 const isActive = (path) => route.path === path
@@ -480,5 +491,35 @@ const handleCommand = (command) => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* 悬浮 AI 助手按钮 */
+.ai-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9997;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+  }
+
+  &.active {
+    background: #ef4444;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.35);
+    &:hover { box-shadow: 0 12px 32px rgba(239, 68, 68, 0.5); }
+  }
 }
 </style>

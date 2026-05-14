@@ -24,11 +24,15 @@ request.interceptors.response.use(response => {
   if (res.code === 200) {
     return res
   } else {
-    ElMessage.error(res.message || '请求失败')
+    if (!response.config.silent) {
+      ElMessage.error(res.message || '请求失败')
+    }
     return Promise.reject(new Error(res.message))
   }
 }, error => {
-  ElMessage.error('网络错误')
+  if (!error.config?.silent) {
+    ElMessage.error('网络错误')
+  }
   return Promise.reject(error)
 })
 

@@ -29,3 +29,11 @@ mybatis-plus:
 jwt:
   secret: ${jwt.secret}
   expiration: 604800 # 7 days in seconds
+
+# Python AI Agent 服务配置
+agent:
+  python-service:
+    url: http://localhost:8000
+    connect-timeout: 5000
+    response-timeout: 600000
+    max-buffer-size: 16777216

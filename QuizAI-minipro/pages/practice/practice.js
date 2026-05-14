@@ -244,7 +244,7 @@ Page({
       aiAnalysisResult: ''
     });
 
-    const requestTask = wx.request({
+    const requestTask = request({
       url: `${app.globalData.baseUrl}/api/ai/explainStream`,
       method: 'GET',
       enableChunked: true,

@@ -26,6 +26,11 @@ const routes = [
         path: 'question',
         name: 'QuestionManage',
         component: () => import('../views/QuestionManage.vue')
+      },
+      {
+        path: 'agent',
+        name: 'AgentManage',
+        component: () => import('../views/agent/AgentManage.vue')
       }
     ]
   }
