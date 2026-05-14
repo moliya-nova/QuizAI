@@ -10,8 +10,11 @@ from quizai_agent.core.logger import get_logger
 logger = get_logger(__name__)
 
 
+import os
+
 class MemoryManager:
     def __init__(self):
+        os.makedirs("data", exist_ok=True)
         self._saver_ctx = AsyncSqliteSaver.from_conn_string("data/memory.db")
         self.checkpointer = None
         self._thread_access: Dict[str, float] = {}

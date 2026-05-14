@@ -18,6 +18,14 @@ target/
 *.jar
 *.war
 
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.data/
+
 # ==================== Node ====================
 node_modules/
 dist/
