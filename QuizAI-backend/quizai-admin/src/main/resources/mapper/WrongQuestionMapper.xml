@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quizai.mapper.WrongQuestionMapper">
+    <select id="selectWrongQuestionByUid" resultType="com.quizai.domain.VO.WrongQuestionVO">
+        select
+        w.id wrong_id,
+        q.id,
+        q.`subject`,
+        q.content,
+        q.correct_answer,
+        q.analysis
+        from wrong_question w
+        join question q on w.question_id = q.id
+        where w.user_id = #{userId}
+        <if test="subject != '全部'">
+            and q.`subject` = #{subject}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  ai:
+    openai:
+      api-key: ${dashscope.api-key}
+      base-url: ${dashscope.base-url}
+      chat:
+        options:
+          model: qvq-max-2025-03-25
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: ${jwt.secret}
+  expiration: 604800 # 7 days in seconds

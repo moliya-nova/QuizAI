@@ -1,0 +1,315 @@
+page {
+  background-color: #F7F9FC;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, sans-serif;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 主体滚动区 */
+.main-scroll {
+  flex: 1;
+  height: 0;
+  width: 100%;
+}
+
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400rpx;
+  background: linear-gradient(180deg, #E0E7FF 0%, #F7F9FC 100%);
+  z-index: -1;
+}
+
+.custom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 40rpx 20rpx 40rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #111827;
+  flex-shrink: 0;
+}
+
+/* 用户信息头部 */
+.header-section {
+  padding: 40rpx;
+  margin-top: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background-color: #FFF;
+  border: 6rpx solid #FFF;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  margin-right: 32rpx;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 8rpx;
+}
+
+.username {
+  font-size: 26rpx;
+  color: #6B7280;
+}
+
+/* 数据概览卡片 (并排风格) */
+.stats-grid {
+  display: flex;
+  gap: 24rpx;
+  margin: 0 40rpx 40rpx 40rpx;
+}
+
+.stat-card {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 32rpx;
+  padding: 32rpx 40rpx;
+}
+
+.blue-card {
+  background-color: #EBF4FF;
+}
+
+.green-card {
+  background-color: #E6F8F3;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: 900;
+  margin-bottom: 4rpx;
+}
+
+.blue-card .stat-value, .blue-card .stat-label {
+  color: #1E3A8A;
+}
+
+.green-card .stat-value, .green-card .stat-label {
+  color: #065F46;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.stat-icon-bg {
+  position: absolute;
+  right: -10rpx;
+  bottom: -20rpx;
+  font-size: 100rpx;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+/* 趋势图弹窗样式 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  width: 600rpx;
+  background-color: #FFF;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #111827;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #9CA3AF;
+  line-height: 1;
+  padding: 10rpx;
+}
+
+.chart-box {
+  background-color: #FFF;
+  border-radius: 24rpx;
+  padding: 20rpx 10rpx;
+}
+
+.bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 260rpx;
+}
+
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 40rpx;
+  height: 100%;
+}
+
+.bar-value {
+  font-size: 20rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.text-danger { color: #EF4444; }
+.text-success { color: #10B981; }
+.text-primary { color: #3B82F6; }
+
+.bar-track {
+  width: 16rpx;
+  height: 140rpx;
+  background-color: #F3F4F6;
+  border-radius: 16rpx;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+
+.bar-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 16rpx;
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bg-danger { background: linear-gradient(to top, #FCA5A5, #EF4444); }
+.bg-success { background: linear-gradient(to top, #6EE7B7, #10B981); }
+.bg-primary { background: linear-gradient(to top, #93C5FD, #3B82F6); }
+
+.bar-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #D1D5DB;
+}
+
+/* 功能菜单 */
+.menu-section {
+  background-color: #FFF;
+  margin: 0 40rpx;
+  border-radius: 32rpx;
+  padding: 10rpx 0;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.02);
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 36rpx 40rpx;
+  border-bottom: 2rpx solid #F3F4F6;
+  transition: background-color 0.2s;
+}
+
+.menu-item:active {
+  background-color: #F9FAFB;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 24rpx;
+}
+
+.menu-text {
+  font-size: 30rpx;
+  color: #374151;
+  font-weight: 500;
+}
+
+.menu-arrow {
+  font-size: 40rpx;
+  color: #D1D5DB;
+}
+
+/* 退出登录 */
+.logout-section {
+  margin-top: 60rpx;
+  padding: 0 40rpx;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FEF2F2;
+  color: #EF4444;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  height: 96rpx;
+  border: none;
+}
+
+.logout-btn::after {
+  border: none;
+}
+
+.logout-btn:active {
+  opacity: 0.8;
+}

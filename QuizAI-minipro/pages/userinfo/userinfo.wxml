@@ -1,0 +1,65 @@
+<view class="page-container">
+  <view class="info-list">
+    <!-- 头像 -->
+    <view class="info-item" bindtap="chooseAvatar">
+      <text class="label">头像</text>
+      <view class="right-content">
+        <image class="avatar" src="{{userInfo.avatar || '/assets/logo/avatar.png'}}" mode="aspectFill"></image>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 用户名 (不可改) -->
+    <view class="info-item">
+      <text class="label">用户名</text>
+      <view class="right-content">
+        <text class="value readonly">{{userInfo.username}}</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 昵称 (可改) -->
+    <view class="info-item" bindtap="editNickname">
+      <text class="label">昵称</text>
+      <view class="right-content">
+        <text class="value">{{userInfo.nickname || '未设置'}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 状态 (不可改) -->
+    <view class="info-item">
+      <text class="label">状态</text>
+      <view class="right-content">
+        <text class="value readonly">{{userInfo.status === 1 ? '正常' : '禁用'}}</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 注册时间 (不可改) -->
+    <view class="info-item">
+      <text class="label">注册时间</text>
+      <view class="right-content">
+        <text class="value readonly">{{userInfo.createTime || '未知'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 昵称修改弹窗 -->
+  <view class="modal-mask" wx:if="{{showNicknameModal}}">
+    <view class="modal-content">
+      <view class="modal-title">修改昵称</view>
+      <input class="modal-input" type="text" value="{{tempNickname}}" bindinput="onNicknameInput" placeholder="请输入新昵称" maxlength="12" />
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closeNicknameModal">取消</view>
+        <view class="modal-btn confirm" bindtap="saveNickname">确定</view>
+      </view>
+    </view>
+  </view>
+</view>

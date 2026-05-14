@@ -1,0 +1,77 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+  
+  <view class="custom-nav">
+    <view class="nav-back" bindtap="goToLogin">
+      <text class="nav-icon">←</text>
+    </view>
+    <view class="nav-title">注册</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="header">
+    <view class="logo-box">
+      <text class="logo-icon">✨</text>
+    </view>
+    <text class="title">创建新账号</text>
+    <text class="subtitle">只需几步，马上开始刷题</text>
+  </view>
+
+  <view class="form-card">
+    <view class="input-group">
+      <view class="input-icon">👤</view>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="设置用户名 (必填)" 
+        placeholder-class="placeholder-style"
+        bindinput="onUsernameInput" 
+        value="{{username}}" 
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="input-icon">🔒</view>
+      <input 
+        class="input" 
+        type="safe-password" 
+        password="true" 
+        placeholder="设置密码 (必填)" 
+        placeholder-class="placeholder-style"
+        bindinput="onPasswordInput" 
+        value="{{password}}" 
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="input-icon">🛡️</view>
+      <input 
+        class="input" 
+        type="safe-password" 
+        password="true" 
+        placeholder="确认密码 (必填)" 
+        placeholder-class="placeholder-style"
+        bindinput="onConfirmPasswordInput" 
+        value="{{confirmPassword}}" 
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="input-icon">📛</view>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="设置昵称 (可选)" 
+        placeholder-class="placeholder-style"
+        bindinput="onNicknameInput" 
+        value="{{nickname}}" 
+      />
+    </view>
+
+    <button class="primary-btn" bindtap="handleRegister">注 册</button>
+    
+    <view class="action-links">
+      <text class="link-text" bindtap="goToLogin">已有账号？返回登录</text>
+    </view>
+  </view>
+</view>

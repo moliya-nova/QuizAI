@@ -1,0 +1,48 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+  
+  <view class="custom-nav">
+    <view class="nav-title">登录</view>
+  </view>
+
+  <view class="header">
+    <view class="logo-box">
+      <text class="logo-icon">🤖</text>
+    </view>
+    <text class="title">欢迎来到 QuizAI</text>
+    <text class="subtitle">登录以开启你的智能刷题之旅</text>
+  </view>
+
+  <view class="form-card">
+    <view class="input-group">
+      <view class="input-icon">👤</view>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入用户名" 
+        placeholder-class="placeholder-style"
+        bindinput="onUsernameInput" 
+        value="{{username}}" 
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="input-icon">🔒</view>
+      <input 
+        class="input" 
+        type="safe-password" 
+        password="true" 
+        placeholder="请输入密码" 
+        placeholder-class="placeholder-style"
+        bindinput="onPasswordInput" 
+        value="{{password}}" 
+      />
+    </view>
+
+    <button class="primary-btn" bindtap="handleLogin">登 录</button>
+    
+    <view class="action-links">
+      <text class="link-text" bindtap="goToRegister">还没账号？立即注册</text>
+    </view>
+  </view>
+</view>

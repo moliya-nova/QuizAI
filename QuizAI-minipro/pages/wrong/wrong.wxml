@@ -1,0 +1,86 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+
+  <view class="custom-nav">
+    <view class="nav-back" bindtap="goBack">
+      <text class="nav-icon">⬅</text>
+    </view>
+    <view class="nav-title">我的错题本</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 科目筛选项 -->
+  <view class="filter-section">
+    <scroll-view scroll-x class="filter-scroll" show-scrollbar="false" enhanced="true">
+      <view class="filter-track">
+        <view 
+          wx:for="{{subjects}}" 
+          wx:key="*this"
+          class="filter-chip {{selectedSubject === item ? 'active' : ''}}"
+          bindtap="onSelectSubject"
+          data-subject="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 错题列表区域 -->
+  <scroll-view scroll-y class="list-container" show-scrollbar="false" enhanced="true">
+    <block wx:if="{{loading}}">
+      <view class="empty-state">
+        <view class="loading-icon pulse-animation">📚</view>
+        <text class="loading-text">正在加载错题...</text>
+      </view>
+    </block>
+
+    <block wx:elif="{{wrongList.length === 0}}">
+      <view class="empty-state">
+        <view class="loading-icon">🎉</view>
+        <text class="loading-text">太棒了，当前科目下没有错题！</text>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="wrong-card" wx:for="{{wrongList}}" wx:key="id">
+        <view class="card-header">
+          <view class="subject-badge">{{item.subject}}</view>
+          <view class="remove-btn" bindtap="removeWrong" data-id="{{item.id}}" data-index="{{index}}">
+            <text class="remove-icon">🗑️</text> 移除
+          </view>
+        </view>
+        
+        <view class="q-content">{{item.content}}</view>
+        
+        <!-- 答案展示 (极简模式：直接高亮正确答案) -->
+        <view class="answer-box">
+          <view class="correct-answer">
+            <text class="answer-label">正确答案：</text>
+            <text class="answer-val">{{item.correctAnswer}}</text>
+          </view>
+          <!-- 点击展开/收起解析 -->
+          <view class="toggle-analysis" bindtap="toggleAnalysis" data-index="{{index}}">
+            <text>{{item.showAnalysis ? '收起解析' : '查看解析'}}</text>
+            <text class="arrow {{item.showAnalysis ? 'up' : 'down'}}">▾</text>
+          </view>
+        </view>
+
+        <!-- 展开的解析内容 -->
+        <view class="analysis-content" wx:if="{{item.showAnalysis}}">
+          <text>{{item.analysis || '暂无解析'}}</text>
+        </view>
+      </view>
+      
+      <!-- 底部留白 -->
+      <view class="bottom-spacer"></view>
+    </block>
+  </scroll-view>
+
+  <!-- 底部固定按钮：错题重练 -->
+  <view class="bottom-action-bar" wx:if="{{wrongList.length > 0}}">
+    <button class="primary-btn" bindtap="startWrongPractice">
+      <text class="btn-icon">📝</text> 错题重练 ({{wrongList.length}}题)
+    </button>
+  </view>
+</view>

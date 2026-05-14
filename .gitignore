@@ -1,0 +1,45 @@
+# ==================== IDE ====================
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+.springBeans
+.sts4-cache
+.nb-gradle/
+
+# ==================== Maven ====================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+
+# ==================== Node ====================
+node_modules/
+dist/
+*.log
+npm-debug.log*
+
+# ==================== OS ====================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ==================== Environment ====================
+.env
+.env.local
+.env.*.local
+
+# ==================== Claude Code ====================
+.claude/
+CLAUDE.md
+
+# ==================== Logs ====================
+logs/
+*.log
