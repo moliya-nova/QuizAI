@@ -1,3 +1,4 @@
+const { request } = require('../../utils/request')
 const app = getApp()
 
 Page({
@@ -73,7 +74,7 @@ Page({
     const { userInfo } = this.data
     wx.showLoading({ title: '保存中' })
 
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/user/update`,
       method: 'POST',
       data: {

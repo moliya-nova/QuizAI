@@ -1,3 +1,4 @@
+const { request } = require('../../utils/request')
 const app = getApp()
 
 Page({
@@ -30,7 +31,7 @@ Page({
   },
 
   fetchLeaderboard() {
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/record/leaderboard`,
       method: 'GET',
       success: (res) => {
@@ -42,7 +43,7 @@ Page({
   },
 
   fetchCategories() {
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/category/list`,
       method: 'GET',
       success: (res) => {

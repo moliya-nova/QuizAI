@@ -1,3 +1,4 @@
+const { request } = require('../../utils/request')
 const app = getApp()
 
 Page({
@@ -53,7 +54,7 @@ Page({
     }
 
     // 调用后端接口获取题目
-    wx.request({
+    request({
       url: url,
       data: data,
       success: (res) => {
@@ -114,7 +115,7 @@ Page({
     if (userInfo) {
       if (!isCorrect && mode !== 'wrong') {
         // 答错了，加入错题本
-        wx.request({
+        request({
           url: `${app.globalData.baseUrl}/api/wrong/add`,
           method: 'POST',
           data: {
@@ -132,7 +133,7 @@ Page({
           content: '错题已掌握，是否从错题本删除该题目？',
           success: (modalRes) => {
             if (modalRes.confirm) {
-              wx.request({
+              request({
                 url: `${app.globalData.baseUrl}/api/wrong/remove`,
                 method: 'POST',
                 data: {
@@ -194,7 +195,7 @@ Page({
     wx.showLoading({ title: '正在保存记录...' })
 
     // 调用后端接口保存本次练习记录
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/record/submit`,
       method: 'POST',
       data: {
@@ -241,7 +242,7 @@ Page({
 
     this.setData({ aiLoading: true, aiAnalysisResult: '' })
 
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/ai/explain`,
       method: 'GET',
       data: {

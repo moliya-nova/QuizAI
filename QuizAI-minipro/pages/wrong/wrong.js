@@ -1,3 +1,4 @@
+const { request } = require('../../utils/request')
 const app = getApp()
 
 Page({
@@ -14,7 +15,7 @@ Page({
   },
 
   fetchCategories() {
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/category/list`,
       method: 'GET',
       success: (res) => {
@@ -34,7 +35,7 @@ Page({
 
     this.setData({ loading: true })
 
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/wrong/list`,
       data: {
         userId: userInfo.id,
@@ -89,7 +90,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           wx.showLoading({ title: '移除中' })
-          wx.request({
+          request({
             url: `${app.globalData.baseUrl}/api/wrong/remove`,
             method: 'POST',
             data: {

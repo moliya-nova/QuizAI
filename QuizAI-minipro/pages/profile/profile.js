@@ -1,3 +1,4 @@
+const { request } = require('../../utils/request')
 const app = getApp()
 
 Page({
@@ -23,7 +24,7 @@ Page({
   },
 
   fetchUserStats(userId) {
-    wx.request({
+    request({
       url: `${app.globalData.baseUrl}/api/record/stats?userId=${userId}`,
       method: 'GET',
       success: (res) => {
