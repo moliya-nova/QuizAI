@@ -2,6 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/index/index",
+    "pages/chat/chat",
     "pages/register/register",
     "pages/practice/practice",
     "pages/wrong/wrong",
@@ -12,8 +13,9 @@
     "pages/practice-enhanced/practice-enhanced"
   ],
   "tabBar": {
+    "custom": true,
     "color": "#6B7280",
-    "selectedColor": "#000000",
+    "selectedColor": "#2B68FF",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
@@ -22,6 +24,10 @@
         "text": "首页",
         "iconPath": "assets/tabbar/home.png",
         "selectedIconPath": "assets/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "AI对话"
       },
       {
         "pagePath": "pages/profile/profile",

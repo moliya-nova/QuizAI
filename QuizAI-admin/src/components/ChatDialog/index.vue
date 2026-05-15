@@ -9,7 +9,7 @@
       <div class="chat-panel-header" @mousedown="onDragStart">
         <div class="header-left">
           <div class="ai-avatar">
-            <el-icon><ChatDotRound /></el-icon>
+            <img :src="avatarImg" class="ai-avatar-img" alt="AI avatar">
           </div>
           <div>
             <div class="title">AI 刷题助手</div>
@@ -29,7 +29,7 @@
       <div class="chat-messages" ref="messagesRef">
         <div v-if="messages.length === 0" class="welcome-screen">
           <div class="welcome-avatar">
-            <el-icon :size="28"><ChatDotRound /></el-icon>
+            <img :src="avatarImg" class="welcome-avatar-img" alt="AI avatar">
           </div>
           <div class="welcome-title">你好，我是 QuizAI 刷题助手</div>
           <div class="welcome-subtitle">可以问我技术面试相关问题</div>
@@ -129,6 +129,7 @@ import { marked } from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
 import { streamChat, deleteMemory, getHistory } from '@/api/agent/chat'
+import avatarImg from '@/assets/img/avatar.jpg'
 
 // ── 配置 marked ──
 marked.setOptions({ breaks: true, gfm: true })
@@ -474,8 +475,13 @@ $radius-sm: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 18px;
+      overflow: hidden;
+    }
+
+    .ai-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .title { font-size: 15px; font-weight: 600; }
@@ -510,8 +516,15 @@ $radius-sm: 10px;
   .welcome-avatar {
     width: 56px; height: 56px; border-radius: 16px;
     background: linear-gradient(135deg, $primary, $primary-light);
-    display: flex; align-items: center; justify-content: center; color: #fff;
+    display: flex; align-items: center; justify-content: center;
     margin-bottom: 14px; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+    overflow: hidden;
+  }
+
+  .welcome-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .welcome-title { font-size: 17px; font-weight: 600; color: $text; margin-bottom: 4px; }
   .welcome-subtitle { font-size: 13px; color: $text-muted; margin-bottom: 20px; }

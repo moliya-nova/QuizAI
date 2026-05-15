@@ -5,16 +5,7 @@
       <!-- Logo 区域 -->
       <div class="logo-area" :class="{ collapsed: isCollapse }">
         <div class="logo-icon">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
-            <path d="M12 16h16M12 20h12M12 24h8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-            <defs>
-              <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                <stop stop-color="#fff"/>
-                <stop offset="1" stop-color="#d1fae5"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <img :src="avatarImg" class="sidebar-avatar" alt="avatar">
         </div>
         <transition name="fade">
           <div v-show="!isCollapse" class="logo-text">
@@ -66,7 +57,7 @@
           <div class="header-time">{{ currentTime }}</div>
           <el-dropdown @command="handleCommand" trigger="click">
             <div class="user-avatar">
-              <div class="avatar-circle">A</div>
+              <img :src="avatarImg" class="avatar-circle" alt="avatar">
               <span class="avatar-name">Admin</span>
               <el-icon class="avatar-arrow"><ArrowDown /></el-icon>
             </div>
@@ -102,6 +93,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ChatDialog from '@/components/ChatDialog/index.vue'
+import avatarImg from '@/assets/img/avatar.jpg'
 import {
   User, Menu, Document, Cpu, ArrowDown, DArrowLeft, DArrowRight,
   HomeFilled, SwitchButton, ChatDotRound
@@ -207,9 +199,11 @@ const handleCommand = (command) => {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
-.logo-icon svg {
+.sidebar-avatar {
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .logo-text {
@@ -453,13 +447,7 @@ const handleCommand = (command) => {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
+  object-fit: cover;
   box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
 }
 

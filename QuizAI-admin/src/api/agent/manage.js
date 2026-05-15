@@ -160,6 +160,17 @@ export function updateModelPreset(data) {
 }
 
 /**
+ * RAG 向量库重建
+ */
+export function rebuildRagIndex() {
+  return request({
+    url: '/agent/manage/rag-rebuild',
+    method: 'post',
+    timeout: 120000
+  })
+}
+
+/**
  * 删除模型预设
  */
 export function delModelPreset(ids) {

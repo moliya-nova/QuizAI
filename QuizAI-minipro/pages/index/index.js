@@ -17,6 +17,9 @@ Page({
   },
 
   onShow() {
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar()?.setSelected(0)
+    }
     const token = wx.getStorageSync('token')
     if (!token) {
       wx.redirectTo({ url: '/pages/login/login' })

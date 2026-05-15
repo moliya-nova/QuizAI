@@ -2,5 +2,8 @@
   "navigationBarTextStyle": "black",
   "navigationStyle": "custom",
   "navigationBarTitleText": "个人中心",
-  "navigationBarBackgroundColor": "#F7F9FC"
+  "navigationBarBackgroundColor": "#F7F9FC",
+  "usingComponents": {
+    "custom-tab-bar": "/custom-tab-bar/index"
+  }
 }

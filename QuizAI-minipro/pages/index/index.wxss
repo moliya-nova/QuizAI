@@ -307,10 +307,11 @@ page {
 /* 底部悬浮操作栏 */
 .bottom-action-bar {
   position: fixed;
-  bottom: 0;
+  bottom: 140rpx;
+  bottom: calc(140rpx + env(safe-area-inset-bottom));
   left: 0;
   width: 100%;
-  padding: 30rpx 40rpx 60rpx 40rpx; /* 适配全面屏底部安全区 */
+  padding: 30rpx 40rpx 30rpx 40rpx;
   background: linear-gradient(to top, rgba(247, 249, 252, 1) 60%, rgba(247, 249, 252, 0));
   box-sizing: border-box;
   pointer-events: none; /* 让背景点击穿透 */

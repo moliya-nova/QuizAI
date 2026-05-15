@@ -1,0 +1,21 @@
+<view class="tab-bar">
+  <view class="tab-bar-bg"></view>
+  <view class="tab-bar-content">
+    <block wx:for="{{list}}" wx:key="index">
+      <!-- 中间 AI 按钮 -->
+      <view wx:if="{{item.isCenter}}" class="tab-item center-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+        <view class="center-btn">
+          <view class="center-icon">
+            <text class="ai-text">AI</text>
+          </view>
+        </view>
+        <text class="tab-text center-text">{{item.text}}</text>
+      </view>
+      <!-- 普通 Tab -->
+      <view wx:else class="tab-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+        <image class="tab-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}" mode="aspectFit"></image>
+        <text class="tab-text {{selected === index ? 'active' : ''}}">{{item.text}}</text>
+      </view>
+    </block>
+  </view>
+</view>

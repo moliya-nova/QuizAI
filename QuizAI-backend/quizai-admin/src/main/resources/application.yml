@@ -30,6 +30,14 @@ jwt:
   secret: ${jwt.secret}
   expiration: 604800 # 7 days in seconds
 
+# 腾讯云 COS 配置
+cos:
+  secret-id: ${cos.secret-id}
+  secret-key: ${cos.secret-key}
+  region: ${cos.region}
+  bucket-name: ${cos.bucket-name}
+  cdn-domain: ${cos.cdn-domain}
+
 # Python AI Agent 服务配置
 agent:
   python-service:

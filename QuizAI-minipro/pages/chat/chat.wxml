@@ -1,0 +1,126 @@
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-left" bindtap="goBack">
+      <text class="nav-back-icon">‹</text>
+    </view>
+    <view class="nav-title">
+      <text class="title-icon">✦</text>
+      <text class="title-text">AI 智能助手</text>
+    </view>
+    <view class="nav-right" bindtap="clearChat">
+      <text class="nav-action-icon">⊕</text>
+    </view>
+  </view>
+
+  <!-- 消息列表 -->
+  <scroll-view
+    scroll-y
+    class="message-list"
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation
+    enhanced
+    show-scrollbar="false"
+  >
+    <!-- 欢迎界面 -->
+    <view class="welcome-section" wx:if="{{showWelcome}}">
+      <view class="welcome-avatar">
+        <view class="avatar-glow"></view>
+        <text class="avatar-emoji">✦</text>
+      </view>
+      <text class="welcome-title">你好，我是 AI 助手</text>
+      <text class="welcome-desc">我可以帮你解答技术问题、分析题目、提供建议。有什么可以帮你的？</text>
+
+      <!-- 快捷入口 -->
+      <view class="quick-actions">
+        <view class="action-card" bindtap="sendMessage" data-content="请帮我分析一道 Java 面试题">
+          <text class="action-icon">☕</text>
+          <text class="action-text">Java 面试题</text>
+        </view>
+        <view class="action-card" bindtap="sendMessage" data-content="请解释 Spring Boot 的自动配置原理">
+          <text class="action-icon">🌱</text>
+          <text class="action-text">Spring 原理</text>
+        </view>
+        <view class="action-card" bindtap="sendMessage" data-content="请帮我复习 MySQL 索引相关知识">
+          <text class="action-icon">🗃️</text>
+          <text class="action-text">MySQL 知识</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <view class="messages-wrapper">
+      <block wx:for="{{messages}}" wx:key="id">
+        <!-- 用户消息 -->
+        <view class="message-row user-row" wx:if="{{item.role === 'user'}}">
+          <view class="message-bubble user-bubble">
+            <text class="bubble-text">{{item.content}}</text>
+          </view>
+        </view>
+
+        <!-- AI 消息 -->
+        <view class="message-row ai-row" wx:if="{{item.role === 'assistant'}}">
+          <view class="message-bubble ai-bubble">
+            <rich-text wx:if="{{item.htmlContent}}" nodes="{{item.htmlContent}}" class="markdown-body" selectable />
+            <text wx:elif="{{item.content}}" class="bubble-text" user-select>{{item.content}}</text>
+            <view class="typing-indicator" wx:if="{{item.isTyping && !item.content}}">
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 推荐问题 -->
+    <view class="suggestions-section" wx:if="{{suggestions.length > 0}}">
+      <view
+        class="suggestion-item"
+        wx:for="{{suggestions}}"
+        wx:key="index"
+        bindtap="sendMessage"
+        data-content="{{item}}"
+      >
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 底部占位 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 停止生成按钮 -->
+  <view class="stop-btn-wrapper" wx:if="{{isStreaming}}">
+    <view class="stop-btn" bindtap="stopGenerating">
+      <view class="stop-icon"></view>
+      <text class="stop-text">停止生成</text>
+    </view>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper">
+      <input
+        class="message-input"
+        placeholder="输入你的问题..."
+        placeholder-class="input-placeholder"
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        bindconfirm="sendMessage"
+        confirm-type="send"
+        disabled="{{isStreaming}}"
+      />
+      <view
+        class="send-btn {{inputText ? 'active' : ''}}"
+        bindtap="sendMessage"
+        data-content=""
+      >
+        <text class="send-icon">↑</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 自定义底部导航栏 -->
+  <custom-tab-bar id="custom-tab-bar"/>
+</view>

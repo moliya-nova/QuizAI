@@ -11,6 +11,9 @@ Page({
   },
 
   onShow() {
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar()?.setSelected(2)
+    }
     const token = wx.getStorageSync('token')
     if (!token) {
       wx.redirectTo({ url: '/pages/login/login' })
@@ -74,11 +77,8 @@ Page({
     // 阻止事件冒泡，防止点击内容区关闭弹窗
   },
 
-  showDevToast() {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
-    })
+  goToChat() {
+    wx.switchTab({ url: '/pages/chat/chat' })
   },
 
   logout() {

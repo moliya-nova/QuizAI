@@ -28,6 +28,7 @@
         <module>quizai-admin</module>
         <module>quizai-agent</module>
         <module>quizai-historydetails</module>
+        <module>quizai-cos</module>
     </modules>
 
     <dependencyManagement>
@@ -79,6 +80,12 @@
             <dependency>
                 <groupId>com.quizai</groupId>
                 <artifactId>quizai-agent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.quizai</groupId>
+                <artifactId>quizai-cos</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
