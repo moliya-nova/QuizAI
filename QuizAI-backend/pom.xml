@@ -85,6 +85,12 @@
 
             <dependency>
                 <groupId>com.quizai</groupId>
+                <artifactId>quizai-historydetails</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.quizai</groupId>
                 <artifactId>quizai-cos</artifactId>
                 <version>${project.version}</version>
             </dependency>
