@@ -83,6 +83,11 @@
             <artifactId>quizai-cos</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.quizai</groupId>
+            <artifactId>quizai-component</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

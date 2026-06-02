@@ -2,6 +2,7 @@
   "navigationBarTitleText": "首页",
   "navigationStyle": "custom",
   "usingComponents": {
-    "custom-tab-bar": "/custom-tab-bar/index"
+    "custom-tab-bar": "/custom-tab-bar/index",
+    "heatmap": "/components/heatmap/heatmap"
   }
 }

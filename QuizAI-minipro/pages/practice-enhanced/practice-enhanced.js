@@ -197,7 +197,20 @@ Page({
     }
 
     const userInfo = wx.getStorageSync('userInfo')
-    if (!userInfo) return
+    const token = wx.getStorageSync('token')
+    if (!userInfo || !token) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录后再保存记录',
+        showCancel: false,
+        success: () => {
+          wx.navigateTo({
+            url: '/pages/login/login'
+          })
+        }
+      })
+      return
+    }
 
     wx.showLoading({ title: '正在保存记录...' })
 

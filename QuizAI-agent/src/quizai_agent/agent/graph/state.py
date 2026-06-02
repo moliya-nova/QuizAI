@@ -13,7 +13,7 @@ class ZhihuitongAgentState(MessagesState):
     # - need_search:    RAG 质量评估后是否需要联网搜索
     # - search_results: 联网搜索结果
     # - suggestions:    AI 推荐的下一步问题
-    # - SQLite 自动持久化全量历史作为长期记忆
+    # - MongoDB 自动持久化全量历史作为长期记忆
 
     summary: str = ""
     rag_context: str = ""

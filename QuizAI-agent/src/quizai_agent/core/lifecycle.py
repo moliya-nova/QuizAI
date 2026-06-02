@@ -6,8 +6,9 @@ from fastapi import FastAPI
 
 from quizai_agent.agent.chat_agent import ChatAgent
 from quizai_agent.agent.rag_agent import RagAgent
-from quizai_agent.agent.memory.sqlite_memory import MemoryManager
+from quizai_agent.agent.memory.mongo_memory import MemoryManager
 from quizai_agent.agent.graph.workflow import AgentWorkflow
+from quizai_agent.core.settings import settings
 from quizai_agent.agent.search_agent import SearchAgent
 
 from quizai_agent.api import chat_router as chat_module
@@ -26,8 +27,8 @@ async def lifespan(app: FastAPI):
     rag_agent = RagAgent(llm_client)
     search_agent = SearchAgent(llm_client)
 
-    # 初始化记忆管理器
-    memory_manager = MemoryManager()
+    # 初始化记忆管理器（MongoDB）
+    memory_manager = MemoryManager(mongo_uri=settings.mongo_uri)
     await memory_manager.init()
 
     # 初始化 Agent 编排

@@ -59,7 +59,7 @@ async def index_article(request: ArticleIndexRequest):
         # 存入 ChromaDB
         count = await vector_store.add_documents(chunks)
 
-        # 存入 SQLite
+        # 存入 MongoDB
         await doc_store.upsert(
             parent_id=parent_id,
             article_id=request.article_id,
@@ -203,7 +203,7 @@ async def rag_status():
             "msg": "success",
             "data": {
                 "chroma_chunk_count": chroma_count,
-                "sqlite_article_count": len(parent_docs),
+                "mongo_article_count": len(parent_docs),
                 "articles": [
                     {"id": d["article_id"], "title": d["title"], "content_len": len(d["content"])}
                     for d in parent_docs

@@ -1,0 +1,177 @@
+.heatmap-container {
+  background-color: #FFF;
+  border-radius: 32rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.03);
+  position: relative;
+}
+
+.heatmap-header {
+  margin-bottom: 24rpx;
+}
+
+.heatmap-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.heatmap-stats {
+  margin-top: 8rpx;
+}
+
+.stat-text {
+  font-size: 24rpx;
+  color: #6B7280;
+}
+
+.stat-highlight {
+  color: #2B68FF;
+  font-weight: 700;
+}
+
+.tooltip {
+  position: absolute;
+  top: 80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #111827;
+  color: #FFF;
+  padding: 12rpx 24rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 12rpx solid #111827;
+}
+
+.heatmap-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* 左侧星期列 */
+.weekday-col {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 40rpx;
+  margin-right: 8rpx;
+}
+
+.weekday-label-spacer {
+  height: 30rpx;
+  margin-bottom: 6rpx;
+}
+
+.weekday-label {
+  height: 24rpx;
+  margin-bottom: 6rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.weekday-text {
+  font-size: 18rpx;
+  color: #9CA3AF;
+  line-height: 1;
+}
+
+/* 右侧滚动区域 */
+.grid-scroll {
+  flex: 1;
+  min-width: 0;
+}
+
+/* grid-inner 收缩到内容宽度，不留多余空白 */
+.grid-inner {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  /* width 由 JS 通过 style 动态设置 */
+}
+
+/* 月份标签行占位 */
+.month-spacer {
+  height: 30rpx;
+  margin-bottom: 6rpx;
+}
+
+/* 网格行 */
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6rpx;
+}
+
+/* 网格单元格 */
+.grid-cell {
+  position: relative;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 6rpx;
+  margin-right: 6rpx;
+  flex-shrink: 0;
+  transition: transform 0.1s;
+}
+
+.grid-cell:active {
+  transform: scale(1.3);
+}
+
+/* 月份标签 */
+.cell-month-label {
+  position: absolute;
+  top: -28rpx;
+  left: 0;
+  font-size: 18rpx;
+  color: #9CA3AF;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 60rpx 0;
+  font-size: 26rpx;
+  color: #9CA3AF;
+}
+
+.legend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20rpx;
+}
+
+.legend-label {
+  font-size: 18rpx;
+  color: #9CA3AF;
+  margin: 0 8rpx;
+}
+
+.legend-cell {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 4rpx;
+  margin-right: 4rpx;
+}

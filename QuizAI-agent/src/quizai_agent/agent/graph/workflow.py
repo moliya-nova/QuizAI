@@ -4,7 +4,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph import END, StateGraph
 
 from quizai_agent.agent.chat_agent import extract_content_text
-from quizai_agent.agent.memory.sqlite_memory import MemoryManager
+from quizai_agent.agent.memory.mongo_memory import MemoryManager
 from quizai_agent.agent.graph.edges import route_after_classify, route_after_evaluate
 from quizai_agent.agent.graph.nodes import (
     make_classify_node, make_llm_node, make_retrieve_node,

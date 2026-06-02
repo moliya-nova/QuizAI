@@ -21,7 +21,7 @@ _ENV_MAPPING = {
     "host": "HOST",
     "port": "PORT",
     "system_prompt": "SYSTEM_PROMPT",
-    "docstore_path": "DOCSTORE_PATH",
+    "mongo_uri": "MONGO_URI",
     # 搜索工具配置
     "tavily_api_key": "TAVILY_API_KEY",
     "tavily_api_url": "TAVILY_API_URL",
@@ -53,7 +53,7 @@ class Settings:
             self.host = os.getenv("HOST", "0.0.0.0")
             self.port = int(os.getenv("PORT", "8000"))
             self.system_prompt = os.getenv("SYSTEM_PROMPT", "")
-            self.docstore_path = os.getenv("DOCSTORE_PATH", "./data/docstore.db")
+            self.mongo_uri = os.getenv("MONGO_URI", "mongodb://admin:quizai123@localhost:27017")
 
             # 搜索工具配置
             self.tavily_api_key = os.getenv("TAVILY_API_KEY", "")
@@ -100,7 +100,7 @@ class Settings:
                 "host": self.host,
                 "port": self.port,
                 "system_prompt": self.system_prompt,
-                "docstore_path": self.docstore_path,
+                "mongo_uri": self.mongo_uri,
                 # 搜索工具配置
                 "tavily_api_key": self.tavily_api_key[:8] + "***" if self.tavily_api_key and len(self.tavily_api_key) > 8 else "***",
                 "tavily_api_url": self.tavily_api_url,

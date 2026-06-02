@@ -1,5 +1,6 @@
 package com.quizai.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.quizai.domain.R;
 import com.quizai.domain.WrongQuestion;
 import com.quizai.security.SecurityUtils;
@@ -17,6 +18,15 @@ public class WrongQuestionController {
     @PostMapping("add")
     public R addWrongQuestion(@RequestBody WrongQuestion wrongQuestion) {
         wrongQuestion.setUserId(SecurityUtils.getCurrentUserId().intValue());
+
+        // 检查是否已存在，避免重复添加
+        QueryWrapper<WrongQuestion> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", wrongQuestion.getUserId());
+        wrapper.eq("question_id", wrongQuestion.getQuestionId());
+        if (wrongQuestionService.count(wrapper) > 0) {
+            return R.success("已在错题本中");
+        }
+
         boolean flag = wrongQuestionService.save(wrongQuestion);
         return flag ? R.success("添加成功") : R.error("添加失败");
     }

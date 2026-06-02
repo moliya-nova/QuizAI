@@ -108,7 +108,7 @@ async def index_knowledge_to_rag() -> dict:
             # 存入 ChromaDB
             await vector_store.add_documents(chunks)
 
-            # 存入 SQLite
+            # 存入 MongoDB
             now_iso = datetime.now(timezone.utc).isoformat()
             await doc_store.upsert(
                 parent_id=parent_id,

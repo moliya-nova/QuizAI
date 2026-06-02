@@ -1,0 +1,63 @@
+<view class="heatmap-container">
+  <view class="heatmap-header">
+    <text class="heatmap-title">练习热力图</text>
+    <view class="heatmap-stats" wx:if="{{!loading && !hasError}}">
+      <text class="stat-text">过去一年共练习 <text class="stat-highlight">{{totalQuestions}}</text> 题，活跃 <text class="stat-highlight">{{activeDays}}</text> 天</text>
+    </view>
+  </view>
+
+  <view class="tooltip" wx:if="{{showTooltip}}">
+    <text class="tooltip-text">{{tooltip}}</text>
+  </view>
+
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <view class="empty-state" wx:elif="{{hasError}}">
+    <text>加载失败，请稍后重试</text>
+  </view>
+
+  <view class="heatmap-body" wx:elif="{{grid.length > 0}}">
+    <!-- 左侧星期列（固定） -->
+    <view class="weekday-col">
+      <view class="weekday-label-spacer"></view>
+      <view class="weekday-label" wx:for="{{['一', '二', '三', '四', '五', '六', '日']}}" wx:key="*this">
+        <text class="weekday-text">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 右侧可滚动区域 -->
+    <scroll-view scroll-x class="grid-scroll" show-scrollbar="false" enhanced="true" scroll-left="{{scrollLeft}}">
+      <view class="grid-inner" style="width: {{gridWidth}}rpx;">
+        <!-- 月份标签行占位（独立行，不干扰格子） -->
+        <view class="month-spacer"></view>
+        <!-- 7行网格 -->
+        <view class="grid-row" wx:for="{{grid}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+          <view class="grid-cell"
+                wx:for="{{row}}"
+                wx:for-item="cell"
+                wx:key="date"
+                style="background-color: {{cell.color}};"
+                data-date="{{cell.date}}"
+                data-count="{{cell.count}}"
+                data-shortdate="{{cell.shortDate}}"
+                bindtap="onCellTap">
+            <text class="cell-month-label" wx:if="{{cell.monthLabel}}">{{cell.monthLabel}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text>暂无练习记录，快去刷题吧</text>
+  </view>
+
+  <view class="legend" wx:if="{{!loading && !hasError && grid.length > 0}}">
+    <text class="legend-label">少</text>
+    <view class="legend-cell" wx:for="{{['#EBEDF0', '#9BE9A8', '#40C463', '#30A14E', '#216E39']}}" wx:key="*this"
+          style="background-color: {{item}};"></view>
+    <text class="legend-label">多</text>
+  </view>
+</view>

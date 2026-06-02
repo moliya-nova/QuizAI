@@ -14,6 +14,11 @@
       <image class="avatar" src="{{userInfo.avatar || '/assets/logo/avatar.png'}}" mode="aspectFill"></image>
     </view>
 
+    <!-- 练习热力图 -->
+    <view class="section">
+      <heatmap></heatmap>
+    </view>
+
     <!-- 排行榜 -->
     <view class="section leaderboard-section">
       <view class="section-header">刷题达人榜</view>
