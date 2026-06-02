@@ -18,21 +18,60 @@
       <!-- 导航菜单 -->
       <div class="nav-wrapper">
         <div class="nav-section-label" v-show="!isCollapse">主菜单</div>
-        <div
-          v-for="item in menuItems"
-          :key="item.path"
-          class="nav-item"
-          :class="{ active: isActive(item.path) }"
-          @click="navigate(item.path)"
-        >
-          <div class="nav-item-bg"></div>
-          <div class="nav-item-accent"></div>
-          <el-icon class="nav-icon" :size="20">
-            <component :is="item.icon" />
-          </el-icon>
-          <span class="nav-label" v-show="!isCollapse">{{ item.label }}</span>
-          <div v-if="isActive(item.path) && !isCollapse" class="active-dot"></div>
-        </div>
+        <template v-for="item in menuItems" :key="item.path">
+          <!-- 有子菜单的项 -->
+          <div v-if="item.children" class="nav-group">
+            <div
+              class="nav-item"
+              :class="{ active: isParentActive(item) }"
+              @click="toggleExpand(item)"
+            >
+              <div class="nav-item-bg"></div>
+              <div class="nav-item-accent"></div>
+              <el-icon class="nav-icon" :size="20">
+                <component :is="item.icon" />
+              </el-icon>
+              <span class="nav-label" v-show="!isCollapse">{{ item.label }}</span>
+              <el-icon v-show="!isCollapse" class="expand-arrow" :class="{ expanded: forumExpanded }">
+                <ArrowDown />
+              </el-icon>
+            </div>
+            <transition name="submenu">
+              <div v-show="forumExpanded && !isCollapse" class="sub-menu">
+                <div
+                  v-for="child in item.children"
+                  :key="child.path"
+                  class="nav-item sub-item"
+                  :class="{ active: isActive(child.path) }"
+                  @click="navigate(child.path)"
+                >
+                  <div class="nav-item-bg"></div>
+                  <div class="nav-item-accent"></div>
+                  <el-icon class="nav-icon" :size="16">
+                    <component :is="child.icon" />
+                  </el-icon>
+                  <span class="nav-label">{{ child.label }}</span>
+                  <div v-if="isActive(child.path) && !isCollapse" class="active-dot"></div>
+                </div>
+              </div>
+            </transition>
+          </div>
+          <!-- 普通菜单项 -->
+          <div
+            v-else
+            class="nav-item"
+            :class="{ active: isActive(item.path) }"
+            @click="navigate(item.path)"
+          >
+            <div class="nav-item-bg"></div>
+            <div class="nav-item-accent"></div>
+            <el-icon class="nav-icon" :size="20">
+              <component :is="item.icon" />
+            </el-icon>
+            <span class="nav-label" v-show="!isCollapse">{{ item.label }}</span>
+            <div v-if="isActive(item.path) && !isCollapse" class="active-dot"></div>
+          </div>
+        </template>
       </div>
 
       <!-- 底部折叠按钮 -->
@@ -95,7 +134,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ChatDialog from '@/components/ChatDialog/index.vue'
 import avatarImg from '@/assets/img/avatar.jpg'
 import {
-  User, Menu, Document, Cpu, ArrowDown, DArrowLeft, DArrowRight,
+  User, Menu, Document, Cpu, ChatLineSquare, Warning, ArrowDown, DArrowLeft, DArrowRight,
   HomeFilled, SwitchButton, ChatDotRound
 } from '@element-plus/icons-vue'
 
@@ -104,23 +143,48 @@ const router = useRouter()
 const isCollapse = ref(false)
 const currentTime = ref('')
 const showChat = ref(false)
+const forumExpanded = ref(route.path.startsWith('/forum'))
 
 const menuItems = [
   { path: '/user', label: '用户管理', icon: User },
   { path: '/category', label: '分类管理', icon: Menu },
   { path: '/question', label: '题目管理', icon: Document },
   { path: '/agent', label: 'Agent管理', icon: Cpu },
+  {
+    path: '/forum',
+    label: '论坛管理',
+    icon: ChatLineSquare,
+    children: [
+      { path: '/forum', label: '帖子管理', icon: ChatLineSquare },
+      { path: '/forum/report', label: '举报管理', icon: Warning },
+    ]
+  },
 ]
 
 const isActive = (path) => route.path === path
+const isParentActive = (item) => item.children && route.path.startsWith(item.path)
 
 const navigate = (path) => {
   router.push(path)
 }
 
+const toggleExpand = (item) => {
+  if (item.children) {
+    forumExpanded.value = !forumExpanded.value
+  }
+}
+
+const pageNameMap = {
+  '/user': '用户管理',
+  '/category': '分类管理',
+  '/question': '题目管理',
+  '/agent': 'Agent管理',
+  '/forum': '帖子管理',
+  '/forum/report': '举报管理',
+}
+
 const currentPageName = computed(() => {
-  const item = menuItems.find(m => m.path === route.path)
-  return item ? item.label : '仪表盘'
+  return pageNameMap[route.path] || '仪表盘'
 })
 
 let timer = null
@@ -353,6 +417,53 @@ const handleCommand = (command) => {
   border-radius: 50%;
   background: #10b981;
   box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+
+/* ========== 子菜单 ========== */
+.nav-group {
+  margin-bottom: 4px;
+}
+
+.expand-arrow {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.expand-arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.sub-menu {
+  overflow: hidden;
+  padding: 4px 0 0 0;
+}
+
+.nav-item.sub-item {
+  height: 40px;
+  padding: 0 16px 0 44px;
+  margin-bottom: 2px;
+  font-size: 13px;
+}
+
+.submenu-enter-active,
+.submenu-leave-active {
+  transition: all 0.25s ease;
+}
+
+.submenu-enter-from,
+.submenu-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+
+.submenu-enter-to,
+.submenu-leave-from {
+  opacity: 1;
+  max-height: 200px;
 }
 
 /* ========== 折叠按钮 ========== */

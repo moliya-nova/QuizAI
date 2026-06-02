@@ -1,0 +1,96 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+  <view class="custom-nav">
+    <view class="nav-back" bindtap="goBack">←</view>
+    <view class="nav-title">我的</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{tab === 'posts' ? 'active' : ''}}" bindtap="switchTab" data-tab="posts">我的帖子</view>
+    <view class="tab-item {{tab === 'favorites' ? 'active' : ''}}" bindtap="switchTab" data-tab="favorites">我的收藏</view>
+  </view>
+
+  <scroll-view scroll-y class="main-scroll" show-scrollbar="false" enhanced="true" bindscrolltolower="onReachBottom">
+    <!-- 我的帖子 -->
+    <view wx:if="{{tab === 'posts'}}" class="list-area">
+      <view
+        wx:for="{{postList}}"
+        wx:key="id"
+        class="post-card {{item.type === 1 ? 'help-card' : 'normal-card'}}"
+      >
+        <view class="card-content" bindtap="goToDetail" data-id="{{item.id}}">
+          <view class="card-header">
+            <text class="card-title">{{item.title}}</text>
+            <view class="header-tags">
+              <view wx:if="{{item.type === 1}}" class="post-type-badge help">🙋 求助帖</view>
+              <view wx:else class="post-type-badge normal">📝 普通帖</view>
+              <view class="status-badge status-{{item.status}}">{{item.status === 0 ? '待审核' : (item.status === 1 ? '已通过' : (item.status === 2 ? '已拒绝' : '已关闭'))}}</view>
+            </view>
+          </view>
+          <text class="card-preview">{{item.content}}</text>
+          <view wx:if="{{item.rejectReason}}" class="reject-reason">
+            拒绝原因: {{item.rejectReason}}
+          </view>
+          <view class="card-footer">
+            <text class="card-time">{{item.createTimeFormatted}}</text>
+            <view class="card-stats">
+              <text>👁{{item.viewCount || 0}}</text>
+              <text>👍{{item.likeCount || 0}}</text>
+              <text>💬{{item.commentCount || 0}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="card-actions">
+          <view class="delete-btn" bindtap="deletePost" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+
+      <view class="empty-state" wx:if="{{!loading && postList.length === 0}}">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">还没有发过帖子</text>
+      </view>
+    </view>
+
+    <!-- 我的收藏 -->
+    <view wx:if="{{tab === 'favorites'}}" class="list-area">
+      <view
+        wx:for="{{favoriteList}}"
+        wx:key="id"
+        class="post-card {{item.type === 1 ? 'help-card' : 'normal-card'}}"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="card-header">
+          <text class="card-title">{{item.title}}</text>
+          <view wx:if="{{item.type === 1}}" class="post-type-badge help">🙋 求助帖</view>
+          <view wx:else class="post-type-badge normal">📝 普通帖</view>
+        </view>
+        <text class="card-preview">{{item.content}}</text>
+        <view class="card-footer">
+          <text class="card-time">{{item.createTimeFormatted}}</text>
+          <view class="card-stats">
+            <text>👍{{item.likeCount || 0}}</text>
+            <text>💬{{item.commentCount || 0}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty-state" wx:if="{{!loading && favoriteList.length === 0}}">
+        <text class="empty-icon">⭐</text>
+        <text class="empty-text">还没有收藏帖子</text>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <view class="no-more" wx:if="{{!hasMore && ((tab === 'posts' && postList.length > 0) || (tab === 'favorites' && favoriteList.length > 0))}}">
+      <text>没有更多了</text>
+    </view>
+
+    <view style="height: 60rpx;"></view>
+  </scroll-view>
+</view>

@@ -41,7 +41,8 @@ public class SecurityConfig {
                     "/api/admin/login",
                     "/api/category/list",
                     "/api/question/random",
-                    "/api/record/leaderboard"
+                    "/api/record/leaderboard",
+                    "/api/file/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

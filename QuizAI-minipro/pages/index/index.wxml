@@ -46,6 +46,20 @@
       </view>
     </view>
 
+    <!-- 论坛入口 -->
+    <view class="wrong-entry" bindtap="goToForum">
+      <view class="wrong-left">
+        <text class="wrong-icon">💬</text>
+        <view class="wrong-text">
+          <text class="wrong-title">学习论坛</text>
+          <text class="wrong-desc">分享交流，互助学习</text>
+        </view>
+      </view>
+      <view class="wrong-right">
+        <text class="wrong-arrow">→</text>
+      </view>
+    </view>
+
     <!-- 科目选择 (横向滑动卡片) -->
     <view class="section">
       <view class="section-header">选择练习科目</view>

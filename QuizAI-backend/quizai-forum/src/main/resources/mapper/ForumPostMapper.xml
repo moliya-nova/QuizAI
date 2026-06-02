@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quizai.mapper.ForumPostMapper">
+
+    <!-- 公共列定义，消除重复 -->
+    <sql id="postColumns">
+        p.id,
+        p.user_id,
+        p.title,
+        p.content,
+        p.type,
+        p.question_id,
+        p.status,
+        p.like_count,
+        p.comment_count,
+        p.favorite_count,
+        p.view_count,
+        p.reject_reason,
+        p.anonymous,
+        p.images,
+        p.videos,
+        p.create_time,
+        p.update_time
+    </sql>
+
+    <sql id="userColumns">
+        case when p.anonymous = 1 then null else u.nickname end as nickname,
+        case when p.anonymous = 1 then null else u.avatar end as avatar
+    </sql>
+
+    <sql id="likedColumns">
+        <choose>
+            <when test="userId != null">
+                (select count(*) from forum_like fl where fl.post_id = p.id and fl.user_id = #{userId}) as liked,
+                (select count(*) from forum_favorite ff where ff.post_id = p.id and ff.user_id = #{userId}) as favorited,
+            </when>
+            <otherwise>
+                0 as liked,
+                0 as favorited,
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="fromTable">
+        from forum_post p
+        left join user u on p.user_id = u.id
+        left join question q on p.question_id = q.id
+    </sql>
+
+    <sql id="whereCondition">
+        <where>
+            and p.deleted = 0
+            <if test="status != null">
+                and p.status = #{status}
+            </if>
+            <if test="type != null">
+                and p.type = #{type}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (p.title like concat('%', #{keyword}, '%') or p.content like concat('%', #{keyword}, '%'))
+            </if>
+        </where>
+    </sql>
+
+    <!-- 帖子列表（分页版，用于用户端和管理端） -->
+    <select id="selectPostListWithUserPage" resultType="com.quizai.domain.VO.ForumPostVO">
+        select
+        <include refid="postColumns"/>,
+        <include refid="userColumns"/>,
+        <include refid="likedColumns"/>
+        q.content as question_content
+        <include refid="fromTable"/>
+        <include refid="whereCondition"/>
+        order by p.create_time desc
+    </select>
+
+    <!-- 帖子详情 -->
+    <select id="selectPostDetailById" resultType="com.quizai.domain.VO.ForumPostVO">
+        select
+        <include refid="postColumns"/>,
+        <include refid="userColumns"/>,
+        <include refid="likedColumns"/>
+        q.content as question_content
+        <include refid="fromTable"/>
+        where p.id = #{postId} and p.deleted = 0
+    </select>
+
+    <!-- 浏览量 +1 -->
+    <update id="incrementViewCount">
+        update forum_post set view_count = view_count + 1 where id = #{postId}
+    </update>
+</mapper>

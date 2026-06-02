@@ -1,0 +1,127 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+  <view class="custom-nav">
+    <view class="nav-back" bindtap="goBack">←</view>
+    <view class="nav-title">发帖</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="main-scroll" show-scrollbar="false" enhanced="true">
+    <!-- 草稿提示 -->
+    <view wx:if="{{hasDraft}}" class="draft-banner">
+      <text class="draft-text">检测到未发布的草稿</text>
+      <view class="draft-actions">
+        <view class="draft-btn restore" bindtap="restoreDraft">恢复</view>
+        <view class="draft-btn discard" bindtap="clearDraft">丢弃</view>
+      </view>
+    </view>
+
+    <!-- 帖子类型选择 -->
+    <view class="form-section">
+      <view class="section-label">帖子类型</view>
+      <view class="type-toggle">
+        <view class="type-option {{type === 0 ? 'active' : ''}}" bindtap="onTypeChange" data-type="0">
+          <text class="type-icon">📝</text>
+          <text class="type-name">普通帖</text>
+        </view>
+        <view class="type-option {{type === 1 ? 'active' : ''}}" bindtap="onTypeChange" data-type="1">
+          <text class="type-icon">🙋</text>
+          <text class="type-name">求助帖</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 匿名发帖 -->
+    <view class="form-section">
+      <view class="anonymous-bar" bindtap="onAnonymousToggle">
+        <view class="anonymous-info">
+          <text class="anonymous-label">匿名发帖</text>
+          <text class="anonymous-preview">{{anonymous ? '匿名用户' : (nickname || '用户')}}</text>
+        </view>
+        <view class="anonymous-toggle {{anonymous ? 'active' : ''}}">
+          <view class="toggle-dot"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 求助帖选择题目 -->
+    <view wx:if="{{type === 1}}" class="form-section">
+      <view class="section-label">选择关联题目</view>
+      <scroll-view scroll-x class="question-scroll" show-scrollbar="false" enhanced="true">
+        <view class="question-track">
+          <view
+            wx:for="{{questionList}}"
+            wx:key="id"
+            class="question-item {{questionId === item.id ? 'active' : ''}}"
+            bindtap="onSelectQuestion"
+            data-id="{{item.id}}"
+          >
+            <text class="q-subject">{{item.subject}}</text>
+            <text class="q-content">{{item.content}}</text>
+          </view>
+          <view wx:if="{{questionList.length === 0}}" class="empty-question">
+            <text>加载中...</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 标题输入 -->
+    <view class="form-section">
+      <view class="section-label">标题</view>
+      <view class="input-wrapper">
+        <input class="title-input" placeholder="请输入标题（最多120字）" maxlength="120" value="{{title}}" bindinput="onTitleInput" />
+        <text class="char-count {{title.length > 100 ? 'warning' : ''}}">{{title.length}}/120</text>
+      </view>
+    </view>
+
+    <!-- 内容输入 -->
+    <view class="form-section">
+      <view class="section-label">内容</view>
+      <view class="textarea-wrapper">
+        <textarea class="content-textarea" placeholder="请输入帖子内容..." maxlength="2000" value="{{content}}" bindinput="onContentInput" />
+        <text class="content-count {{content.length > 1800 ? 'warning' : ''}}">{{content.length}}/2000</text>
+      </view>
+    </view>
+
+    <!-- 媒体上传 -->
+    <view class="form-section">
+      <view class="section-label">添加图片/视频</view>
+      <view class="media-picker">
+        <view wx:for="{{mediaList}}" wx:key="tempFilePath" class="media-preview-item">
+          <image wx:if="{{mediaType === 'image'}}" class="media-thumb" src="{{item.tempFilePath}}" mode="aspectFill" />
+          <image wx:elif="{{mediaType === 'video'}}" class="media-thumb" src="{{item.thumbTempFilePath || item.tempFilePath}}" mode="aspectFill" />
+          <view wx:if="{{item.uploading}}" class="media-overlay">
+            <text class="media-loading">上传中</text>
+          </view>
+          <view wx:if="{{item.uploaded}}" class="media-overlay success">
+            <text class="media-done">✓</text>
+          </view>
+          <view class="media-remove" catchtap="removeMedia" data-index="{{index}}">✕</view>
+        </view>
+        <view wx:if="{{mediaList.length === 0}}" class="media-add-btn" catchtap="chooseMedia" data-type="image">
+          <text class="add-icon">🖼</text>
+          <text class="add-text">图片</text>
+        </view>
+        <view wx:if="{{mediaList.length === 0}}" class="media-add-btn" catchtap="chooseMedia" data-type="video">
+          <text class="add-icon">🎬</text>
+          <text class="add-text">视频</text>
+        </view>
+        <view wx:if="{{mediaType === 'image' && mediaList.length < maxImageCount}}" class="media-add-btn" catchtap="chooseMedia" data-type="image">
+          <text class="add-icon">+</text>
+        </view>
+      </view>
+      <view wx:if="{{mediaType === 'video'}}" class="media-hint">视频最长60秒</view>
+      <view wx:if="{{mediaType === 'image'}}" class="media-hint">最多{{maxImageCount}}张图片</view>
+    </view>
+
+    <view style="height: 200rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部提交按钮 -->
+  <view class="bottom-action-bar">
+    <button class="submit-btn {{submitting ? 'disabled' : ''}}" bindtap="submitPost" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '发布帖子'}}
+    </button>
+  </view>
+</view>

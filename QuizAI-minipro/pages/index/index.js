@@ -84,5 +84,11 @@ Page({
     wx.navigateTo({
       url: '/pages/wrong/wrong'
     })
+  },
+
+  goToForum() {
+    wx.navigateTo({
+      url: '/pages/forum/forum'
+    })
   }
 })

@@ -31,6 +31,16 @@ const routes = [
         path: 'agent',
         name: 'AgentManage',
         component: () => import('../views/agent/AgentManage.vue')
+      },
+      {
+        path: 'forum',
+        name: 'ForumManage',
+        component: () => import('../views/ForumManage.vue')
+      },
+      {
+        path: 'forum/report',
+        name: 'ForumReportManage',
+        component: () => import('../views/ForumReportManage.vue')
       }
     ]
   }

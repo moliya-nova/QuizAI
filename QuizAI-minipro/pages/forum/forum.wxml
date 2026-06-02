@@ -1,0 +1,91 @@
+<view class="page-container">
+  <view class="top-bg"></view>
+  <view class="custom-nav">
+    <view class="nav-back" bindtap="goBack">←</view>
+    <view class="nav-title">学习论坛</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="main-scroll" show-scrollbar="false" enhanced="true">
+    <!-- 类型筛选 -->
+    <view class="type-tabs">
+      <view
+        wx:for="{{typeTabs}}"
+        wx:key="value"
+        class="tab-item {{type === item.value ? 'active' : ''}}"
+        bindtap="onTypeChange"
+        data-type="{{item.value}}"
+      >{{item.name}}</view>
+    </view>
+
+    <!-- 搜索框 -->
+    <view class="search-bar">
+      <input class="search-input" placeholder="搜索帖子..." value="{{keyword}}" bindinput="onKeywordInput" bindconfirm="onSearch" />
+    </view>
+
+    <!-- 帖子列表 -->
+    <view class="post-list">
+      <view
+        wx:for="{{postList}}"
+        wx:key="id"
+        class="post-card {{item.type === 1 ? 'help-card' : 'normal-card'}}"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="post-header">
+          <image class="post-avatar" src="{{item.avatar || '/assets/logo/avatar.png'}}" mode="aspectFill"></image>
+          <view class="post-user-info">
+            <text class="post-nickname">{{item.nickname || '匿名用户'}}</text>
+            <text class="post-time">{{item.createTimeFormatted}}</text>
+          </view>
+          <view wx:if="{{item.type === 1}}" class="post-type-badge help">🙋 求助帖</view>
+          <view wx:else class="post-type-badge normal">📝 普通帖</view>
+        </view>
+        <view class="post-title">{{item.title}}</view>
+        <view class="post-content-preview">{{item.content}}</view>
+        <view wx:if="{{item.imageList.length > 0 || item.videoList.length > 0}}" class="post-media-hint">
+          <text wx:if="{{item.imageList.length > 0}}" class="media-count">{{item.imageList.length}}张图片</text>
+          <text wx:if="{{item.videoList.length > 0}}" class="media-count">视频</text>
+        </view>
+        <view wx:if="{{item.type === 1 && item.questionContent}}" class="post-question-hint">
+          <text class="hint-label">关联题目:</text>
+          <text class="hint-text">{{item.questionContent}}</text>
+        </view>
+        <view class="post-stats">
+          <text class="stat-item">👁 {{item.viewCount || 0}}</text>
+          <text class="stat-item">👍 {{item.likeCount || 0}}</text>
+          <text class="stat-item">💬 {{item.commentCount || 0}}</text>
+          <text class="stat-item">⭐ {{item.favoriteCount || 0}}</text>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{!loading && postList.length === 0}}">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无帖子</text>
+      </view>
+
+      <!-- 加载中 -->
+      <view class="loading-more" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+
+      <!-- 没有更多 -->
+      <view class="no-more" wx:if="{{!hasMore && postList.length > 0}}">
+        <text>没有更多了</text>
+      </view>
+    </view>
+
+    <view style="height: 160rpx;"></view>
+  </scroll-view>
+
+  <!-- 悬浮发帖按钮 -->
+  <view class="fab-btn" bindtap="goToCreate">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <!-- 我的帖子入口 -->
+  <view class="my-btn" bindtap="goToMy">
+    <text class="my-icon">📋</text>
+  </view>
+</view>

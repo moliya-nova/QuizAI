@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quizai.mapper.ForumCommentMapper">
+    <select id="selectCommentsByPostId" resultType="com.quizai.domain.VO.ForumCommentVO">
+        select
+        c.id,
+        c.post_id,
+        c.user_id,
+        c.content,
+        c.parent_id,
+        c.reply_to_user_id,
+        c.status,
+        c.images,
+        c.create_time,
+        u.nickname,
+        u.avatar,
+        ru.nickname as reply_to_nickname
+        from forum_comment c
+        left join user u on c.user_id = u.id
+        left join user ru on c.reply_to_user_id = ru.id
+        where c.post_id = #{postId} and c.status = 1 and c.deleted = 0
+        order by c.create_time asc
+    </select>
+</mapper>

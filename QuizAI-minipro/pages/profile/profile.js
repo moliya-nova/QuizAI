@@ -77,6 +77,18 @@ Page({
     // 阻止事件冒泡，防止点击内容区关闭弹窗
   },
 
+  goToForumMy() {
+    wx.navigateTo({
+      url: '/pages/forum-my/forum-my'
+    })
+  },
+
+  goToForumFavorite() {
+    wx.navigateTo({
+      url: '/pages/forum-my/forum-my'
+    })
+  },
+
   goToChat() {
     wx.switchTab({ url: '/pages/chat/chat' })
   },
