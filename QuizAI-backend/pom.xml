@@ -30,6 +30,7 @@
         <module>quizai-historydetails</module>
         <module>quizai-cos</module>
         <module>quizai-component</module>
+        <module>quizai-forum</module>
     </modules>
 
     <dependencyManagement>
@@ -107,6 +108,12 @@
             <dependency>
                 <groupId>com.quizai</groupId>
                 <artifactId>quizai-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.quizai</groupId>
+                <artifactId>quizai-forum</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

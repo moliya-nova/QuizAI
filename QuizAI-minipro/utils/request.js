@@ -39,9 +39,7 @@ function request(options) {
 
   const requestTask = wx.request({
     ...options,
-    url,
     header,
-    success: wrappedSuccess,
     fail: (err) => {
       wx.showToast({ title: '网络请求失败', icon: 'none' })
       options.fail && options.fail(err)

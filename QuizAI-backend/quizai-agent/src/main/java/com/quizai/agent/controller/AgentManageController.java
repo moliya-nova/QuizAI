@@ -13,6 +13,7 @@ import com.quizai.agent.service.AgentConcurrencyService;
 import com.quizai.agent.service.AgentStatusService;
 import com.quizai.agent.service.IAiModelPresetService;
 import com.quizai.domain.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("api/agent/manage")
 public class AgentManageController {
@@ -158,5 +160,16 @@ public class AgentManageController {
         wrapper.eq(AiModelPreset::getStatus, "0")
                .orderByAsc(AiModelPreset::getSortOrder);
         return R.success(presetService.list(wrapper));
+    }
+
+    @PostMapping("/rag-rebuild")
+    public R<String> ragRebuild() {
+        try {
+            String result = configService.ragRebuild();
+            return R.success("RAG 向量库索引重建成功", result);
+        } catch (Exception e) {
+            log.error("RAG 索引重建失败", e);
+            return R.error("RAG 索引重建失败: " + e.getMessage());
+        }
     }
 }

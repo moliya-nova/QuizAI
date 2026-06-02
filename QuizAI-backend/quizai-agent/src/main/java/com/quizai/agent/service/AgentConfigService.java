@@ -56,4 +56,12 @@ public class AgentConfigService {
                 .bodyToMono(String.class)
                 .block();
     }
+
+    public String ragRebuild() {
+        return webClient.post()
+                .uri("/rag/index/knowledge")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
 }

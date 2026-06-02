@@ -88,6 +88,12 @@
             <artifactId>quizai-component</artifactId>
         </dependency>
 
+        <!-- 论坛模块 -->
+        <dependency>
+            <groupId>com.quizai</groupId>
+            <artifactId>quizai-forum</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
